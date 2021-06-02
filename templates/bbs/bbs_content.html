@@ -1,0 +1,102 @@
+<!doctype html>
+<html>    
+    <head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js";></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>BBS Content</title>
+        <style>
+            main {width:fit-content; padding:10px; margin:0 auto;}
+            table {border-collapse:collapse; border:1px solid black; width:600px; border-spacing:0px; margin-bottom:20px; }
+            caption {margin-bottom:30px;}
+            th {background-color:yellowgreen;}
+            td, th {border:1px dotted black; padding:10px;}
+            #content {height:300px;}
+            #content td {margin-bottom:20px; overflow:auto;}
+            .right {float:right; margin:0 5px;}
+            .left {margin:0 auto; position:relative; left:-250px; top:70px;}
+            .link {background-color:blue; color:white; text-decoration:none; padding:5px; }
+            #login {left:20px;}
+            #logout {display:none;}
+            a {text-decoration:none; color:blue;}
+            @media (min-width: 0px) {body {width:1920px;}}
+        </style>
+        <script>
+            $(function() {
+                if ($('#login').val()!='') {
+                    $('#login').css('display','none')
+                    $('#logout').css('display', 'block')
+                }
+            })
+            function check() {
+                if ($('#login').val()!=$('#author').val()) {
+                    alert('본인의 글이 아닙니다')
+                }if ($('#login').val()==$('#author').val()) {
+                    location.href='/bbs/edit/'+$('#num').val()
+                }
+            }
+            function checkIt(){
+                if ($('#login').val()!=$('#author').val()) {
+                    alert('본인의 글이 아닙니다')
+                    location.href='/bbs/list'
+                }if ($('#login').val()==$('#author').val()) {
+                    ok = confirm('정말 삭제 하시겠습니까?');
+                    if (ok) {
+                        location.href='/bbs/delete/'+$('#num').val()
+                    }else {
+                        f.reset();
+                        alert('취소했습니다');
+                        location.href='/bbs/read/'+$('#num').val()
+                }
+                }
+            }
+            function logout() {
+                alert('로그아웃 되었습니다')
+            }
+            /*var url = '/bbs/hitcnt/'
+            $(function() {
+                $.ajax({
+                url: url+$('#num').val(),
+                method: "post",
+                dataType: "html",
+                data: "",
+                success: function(data){
+                    return;
+                },
+                error: function (request, status, error){
+                    alert(error);
+                }
+            });
+            })*/
+        </script>
+    </head>
+    <body>
+        <main>
+            <button class='link left' type='button' onclick="location.href='/bbs'" name='login' id='login' value='{{ uid }}'>로그인</button>
+            <button class='link left' type='button' onclick="location.href='/bbs/logout', logout()" name='logout' id='logout'>로그아웃</button>
+            <table>
+                <input type='hidden' name='num' id='num' value='{{content.num}}'>
+                <colgroup span='1' style='width:100px;'></colgroup>
+                <caption><h3>게시판 글 읽기</h3></caption>
+                <tr><th>글번호</th><td id='num'>{{ content.num }}</td></tr>
+                <tr><th>글제목</th><td>{{ content.title }}</td></tr>
+                <input type='hidden' name='author' id='author' value='{{content.author}}'>
+                <tr><th>작성자</th><td>{{ content.author }}</td></tr>                    
+                <tr><th>작성일</th><td>{{ content.wdate }}</td></tr>
+                <tr><th>조회수</th><td>{{ content.hitcnt }}</td></tr>
+                <tr id='content'><th>내 용</th><td>
+                    {% for list in content_list %}
+                        {{ list }}<br>
+                    {% endfor %}
+                </td></tr>
+                <tr id=file><th>첨부파일</th><td><a href="/bbs/download/{{or_fname}}" id='fname'>
+                {% for name in names %}
+                <a href="/bbs/download/{{name.fid}}">{{ name.or_fname }}</a> {{name.fsize}}<br>
+                {% endfor %}</a></td></tr>
+            </table>
+            <button type='button' class='right' onclick="location.href='/bbs/page/1'">목록</button>
+            <button type='button' class='right' id='delete' onclick='checkIt()'>삭제</button>
+            <button type='button' class='right' id='edit' onclick='check()'>수정</button>
+        </main>
+    </body>
+</html>

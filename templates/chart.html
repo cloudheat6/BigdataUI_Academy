@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>View Chart</title>
+    <link rel="shortcut icon" href="/static/heart1.png">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js";></script>
+    <script>
+        function subplot(){
+                var url = '/subplot';
+                $.ajax({
+                    url: url,
+                    method: "get",
+                    dataType: "json",
+                    data: "",
+                    success: function(data){
+                        $('#plot').attr('src', '/'+data.chartname);
+                        $('#plot').css('display', 'block');
+                    },
+                    error: function (request, status, error){
+                        alert(error);
+                    }
+                });
+                }
+        function triplot(){
+                var url = '/triplot';
+                $.ajax({
+                    url: url,
+                    method: "get",
+                    dataType: "json",
+                    data: "",
+                    success: function(data){
+                        $('#plot').attr('src', '/'+data.chartname);
+                        $('#plot').css('display', 'block');
+                    },
+                    error: function (request, status, error){
+                        alert(error);
+                    }
+                });
+                }
+        function cumsum(){
+                var url = '/cumsum';
+                $.ajax({
+                    url: url,
+                    method: "get",
+                    dataType: "json",
+                    data: "",
+                    success: function(data){
+                        $('#plot').attr('src', '/'+data.chartname);
+                        $('#plot').css('display', 'block');
+                    },
+                    error: function (request, status, error){
+                        alert(error);
+                    }
+                });
+                }
+        function barchart(){
+                var url = '/barchart';
+                $.ajax({
+                    url: url,
+                    method: "get",
+                    dataType: "json",
+                    data: "",
+                    success: function(data){
+                        $('#plot').attr('src', '/'+data.chartname);
+                        $('#plot').css('display', 'block');
+                    },
+                    error: function (request, status, error){
+                        alert(error);
+                    }
+                });
+                }
+        function bar(){
+                var url = '/bar';
+                $.ajax({
+                    url: url,
+                    method: "get",
+                    dataType: "json",
+                    data: "",
+                    success: function(data){
+                        $('#plot').attr('src', '/'+data.chartname);
+                        $('#plot').css('display', 'block');
+                    },
+                    error: function (request, status, error){
+                        alert(error);
+                    }
+                });
+                }
+        function circle(){
+                var url = '/circle';
+                $.ajax({
+                    url: url,
+                    method: "get",
+                    dataType: "json",
+                    data: "",
+                    success: function(data){
+                        $('#plot').attr('src', '/'+data.chartname);
+                        $('#plot').css('display', 'block');
+                    },
+                    error: function (request, status, error){
+                        alert(error);
+                    }
+                });
+                }
+        function axes3d(){
+                var url = '/axes3d';
+                $.ajax({
+                    url: url,
+                    method: "get",
+                    dataType: "json",
+                    data: "",
+                    success: function(data){
+                        $('#plot').attr('src', '/'+data.chartname);
+                        $('#plot').css('display', 'block');
+                    },
+                    error: function (request, status, error){
+                        alert(error);
+                    }
+                });
+                }
+        function addsubplot(){
+                var url = '/addsubplot';
+                $.ajax({
+                    url: url,
+                    method: "get",
+                    dataType: "json",
+                    data: "",
+                    success: function(data){
+                        $('#plot').attr('src', '/'+data.chartname);
+                        $('#plot').css('display', 'block');
+                    },
+                    error: function (request, status, error){
+                        alert(error);
+                    }
+                });
+                }
+    </script>
+    <style>
+        body {margin:0; padding:0; background:url('/static/moodback.png') no-repeat;}
+        header {text-align:center;}
+        h1 {margin:0; margin-bottom:5px; padding:0; color:red; font-family:Courier}
+        h3 {font-family:Cursive;}
+        header ul {list-style-type:none; padding:0; background-color:rgb(100,200,200); margin:0;}
+        #menu>li {display:inline; padding:0 15px; border-right:1px solid black;}
+        #menu>li>a {color:black; font-family:Georgia; text-decoration:none;}
+        #menu>li:last-child {border-right:none;}
+        img {text-align:center; display:none; width:800px; height:500px; margin:0 auto;}
+        footer {position:absolute; top:96%; background-color:rgb(100,200,200); width:100%;}
+        #chartmenu {float:right; margin-top:30px;margin-right:1.5%; background-color:skyblue; list-style-type:none;
+                    padding:0; text-align:center;}
+        #chartmenu>li {padding:3px 5px;}
+        #chartmenu>li>button {font-family:Arial; background-color:yellow; border:none;}
+        #chart:hover #chartmenu {display:block;}
+        #handwrite {background-color:rgba(9, 255, 0, 0.5); width:fit-content; margin:0 auto; padding:30px;}
+        @media (min-width: 0px) {body {width:1920px;}}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Chart</h1>
+        <h3>click chart name</h3>
+        <nav>
+            <ul id="menu">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/bbs/list">BBS</a>
+                </li>
+                <li>
+                    <a href="/chart">Chart</a>
+                </li>
+                <li>
+                    <a href="/machinelearning">MachineLearning</a>
+                </li>
+                <li>
+                    <a href="/reinforcement">ReinforcementLearning</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <ul id="chartmenu">
+            <li>
+                <button onclick="subplot()">subplot</button>
+            </li>
+            <li>
+                <button onclick="triplot()">triplot</button>
+            </li>
+            <li>
+                <button onclick="cumsum()">cumsum</button>
+            </li>
+            <li>
+                <button onclick="barchart()">barchart</button>
+            </li>
+            <li>
+                <button onclick="bar()">bar</button>
+            </li>
+            <li>
+                <button onclick="circle()">piechart</button>
+            </li>
+            <li>
+                <button onclick="axes3d()">Axes3D</button>
+            </li>
+            <li>
+                <button onclick="addsubplot()">addsubplot</button>
+            </li>
+        </ul>
+            <img id="plot">
+    </main>
+    <footer>
+        <div>
+            Use Module and Library<br>
+            flask, json, os, numpy, matplotlib, pandas, mpl_toolkits, werkzeug, keras, tensorflow, sklearn
+        </div>
+    </footer>
+</body>
+</html>

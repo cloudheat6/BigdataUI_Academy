@@ -1,0 +1,96 @@
+<!doctype html>
+<html>    
+    <head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js";></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>BBS List</title>
+        <style>
+            main {text-align:center;}
+            main>a:hover {background-color:steelblue;}
+            table {border-collapse:collapse; margin:10px auto; background-color:rgba(0, 255, 242, 0.2);}
+            th {border:1px solid black; padding:10px; background-color:yellowgreen;}
+            td {border:1px solid black; padding:10px;}
+            tr:nth-child(odd) {background-color:rgb(221, 220, 220, 0.6);}
+            tr:not(:nth-child(1)):hover {background-color:skyblue;}
+            #title {width:350px;}
+            td a {text-decoration:none; color:blue;}
+            td a:hover {color:red;}
+            .right {position:relative; left:270px; top:-10px;}
+            .left {margin:0 auto; position:relative; left:-330px; top:10px;}
+            #login {left:-240px; top:-10px;}
+            .link {background-color:blue; color:white; text-decoration:none; padding:5px; }
+            #s_form {margin-top:10px;}
+            #s_menu {position:relative; left:-10px; top:3px;}
+            #s_button {position:relative; right:-10px; top:1px;}
+            .page {text-decoration:none; color:blue;}
+            #logout {display:none;}
+            button:hover {background-color:thistle;}
+            #userid {position:relative; left:-110px; top:-17px; font-weight:bolder;}
+            #pfhome {position:relative; left:-330px; top:-20px;}
+            @media (min-width: 0px) {body {width:1920px;}}
+        </style>
+        <script>
+            $(function() {
+                if ($('#login').val()!='') {
+                    $('#login').css('display','none')
+                    $('#logout').css('display', 'block')
+                }else{
+                    $('#userid').css('display','none')
+                }
+            })
+            function logout() {
+                alert('로그아웃 되었습니다')
+            }
+
+            function check() {
+                if ($('#login').val()=='') {
+                    alert('로그인 후 이용해주세요')
+                    location.href='/bbs/list'
+                }else {
+                    location.href='/bbs/write'
+                    }
+            }
+        </script>
+    </head>
+    <body>
+        <main>
+            <h2>게시판</h2>
+            <button onclick="location.href='/'" id='pfhome'>PortFolio Home</button>
+            <button class='link left' type='button' onclick="location.href='/bbs'" name='login' id='login' value='{{uid}}'>로그인</button>
+            <button class='link left' type='button' onclick="location.href='/bbs/logout', logout()" name='logout' id='logout'>로그아웃</button>
+            <span id='userid'>접속 아이디 : {{uid}}</span>
+            <a class='link right' href='/bbs/page/1'>전체글보기</a>
+            <a class='link right' onclick="check()">새글입력</a>
+            <table>
+                <tr><th>글번호</th><th id='title'>글제목</th><th>작성자</th><th>작성일</th><th>첨부파일</th><th>조회수</th></tr>
+                {% for list in lists %}
+                <tr>
+                    <td>{{ list.num }}</td>
+                    <td><a href='/bbs/read/{{list.num}}'>{{ list.title }}</a></td>
+                    <td>{{ list.author }}</td>
+                    <td>{{ list.wdate }}</td>
+                    <td>{% for fname in flists %}
+                            {% if fname.num==list.num %}
+                                {{ fname.or_fname if fname.or_fname else '' }}<br>
+                            {% endif %}
+                        {% endfor %}</td>
+                    <td>{{ list.hitcnt }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% for i in range(num) %}
+            <a href='/bbs/page/{{i+1}}' class='page'>{{i+1}}</a>
+            {% endfor %}
+            <form action='/bbs/search1' method='post' id='s_form'>
+                <select name='s_menu' id='s_menu'>
+                    <option value='title'>제목</option>
+                    <option value='author'>작성자</option>
+                    <option value='content'>내용</option>
+                </select>
+                <input type='text' name='search' id='search'>
+                <button type='submit' id='s_button'>검색</button>
+            </form>
+        </main>
+    </body>
+</html>

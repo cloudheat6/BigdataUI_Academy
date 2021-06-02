@@ -1,0 +1,91 @@
+<!doctype html>
+<html>    
+    <head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js";></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>BBS Edit</title>
+        <style>
+            main {width:fit-content; padding:10px; margin:0 auto;}
+            table {border-collapse:collapse; border:1px solid black; width:600px; border-spacing:0px; margin-bottom:20px;}
+            caption {margin-bottom:30px;}
+            th {background-color:yellowgreen;}
+            td, th {border:1px dotted black; padding:10px;}
+            #trcontent {height:300px;}
+            #trcontent td {margin-bottom:20px;}
+            .input {width:470px;}
+            #contents {width:470px; height:300px; overflow:auto;}
+            .right {float:right; margin:0 5px;}
+            .left {margin:0 auto; position:relative; top:70px;}
+            .link {background-color:blue; color:white; text-decoration:none; padding:5px; }
+            #logout {display:none; left:-250px;}
+            #button1 {margin:0 auto;}
+            @media (min-width: 0px) {body {width:1920px;}}
+        </style>
+        <script>
+            $(function() {
+                if ($('#login').val()!='') {
+                    $('#login').css('display','none')
+                    $('#logout').css('display', 'block')
+                }
+            })
+            function checkIT(f){
+                ok = confirm('입력된 내용으로 수정하시겠어요?');
+                if (ok) {
+                    alert('수정되었습니다')
+                    return true;
+                }else {
+                    f.reset();
+                    alert('취소했습니다');
+                    return false;
+                }
+            }
+            function logout() {
+                alert('로그아웃 되었습니다')
+            }
+            var cnt = 1;
+            function addfile() {
+                name = 'file'+cnt;
+                $("#addfile").append("<div><input type='file' name='"+name+"'></div>")
+                cnt++;
+                console.log(name)
+            }
+            function removefile() {
+                cnt--;
+                if (cnt<=0) cnt=1;
+                $("#addfile div:last-child").remove();
+            }
+        </script>
+    </head>
+    <body>
+        <main>
+            <button class='link left' type='button' onclick="location.href='/bbs'" name='login' id='login' value='{{uid}}'>로그인</button>
+            <button class='link left' type='button' onclick="location.href='/bbs/logout', logout()" name='logout' id='logout'>로그아웃</button>
+            <form action='/bbs/update' method='post' enctype="multipart/form-data" onsubmit="return checkIT(this);">
+                <table>
+                    <colgroup span='1' style='width:100px;'></colgroup>
+                    <caption><h3>게시판 글 수정하기</h3></caption>
+                    <tr><th>글번호</th><td><input class='input' type='text' name='num' value='{{ content.num }}' readonly></td></tr>
+                    <tr><th>글제목</th><td><input class='input' type='text' id='title' name='title' value='{{content.title}}'></td></tr>
+                    <tr><th>작성자</th><td><input class='input' type='text' value='{{ content.author }}' disabled></td></tr>                    
+                    <tr><th>작성일</th><td><input class='input' type='text' value='{{ content.wdate }}' disabled></td></tr>
+                    <tr><th>조회수</th><td><input class='input' type='text' value='{{ content.hitcnt }}' disabled></td></tr>
+                    <tr><th>내 용</th><td><textarea id='contents' name='content'>
+                        {% for list in content_list %}
+                            {{ list }}
+                        {% endfor %}
+                    </textarea>
+                    </td></tr>
+                    <tr><th>파일</th>
+                        <td>{% for name in names %}
+                            {{ name.or_fname }}
+                            {% endfor %}
+                            <br><br>
+                        <button type='button' onclick='addfile()'>파일필드 추가</button> <button type='button' onclick='removefile()'>파일필드 제거</button><p id='addfile'></p></td></tr>
+                </table>
+                <button type='button' class='right' onclick="location.href='/bbs/read/{{content.num}}'">취소</button>
+                <button type='submit' class='right'>저장</button>
+            </form>
+        </main>
+    </body>
+</html>

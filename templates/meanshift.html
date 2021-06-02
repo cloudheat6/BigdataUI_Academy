@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>KMeans</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js";></script>
+    <style>
+        body {margin:0; padding:0; background:url('/static/moodback.png') no-repeat; text-align:center;}
+        h1 {margin:0; margin-bottom:5px; padding:0; color:red; font-family:Courier}
+        h3 {font-family:Cursive;}
+        nav {margin:0; background-color:rgb(100,200,200);}
+        nav>ul {margin:0; text-align:center; padding:0;}
+        nav>ul>li {display:inline; list-style-type:none; padding:0 15px; border-right:1px black solid;}
+        nav>ul>li:last-child {border-right:none;}
+        nav>ul>li>a {text-decoration:none; color:black; font-family:Georgia;}
+        #learningmenu {float:right; margin-top:30px;margin-right:1.5%; background-color:skyblue; list-style-type:none;
+                    padding:0; text-align:center;}
+        #learningmenu>li {padding:5px 10px;}
+        #learningmenu>li>a {text-decoration:none; color:black; font-family:Georgia; background-color:yellow;}
+        #kmeansdiv {background-color:rgba(0, 247, 255, 0.5); width:fit-content; margin:0 auto; padding:30px;}
+        #imgdiv {margin:10px 0;}
+        @media (min-width: 0px) {body {width:1920px;}}
+    </style>
+    <script>
+        function num() {
+            if ($('#num').val()=='') {
+                    alert('번호를 입력해주세요');
+                    return none;
+                }
+            var url = "/meanshift/"+$('#num').val()
+            $.ajax({
+                url: url,
+                method: "get",
+                dataType: "json",
+                data: "",
+                success: function(data){
+                    $('#img').attr('src', '/static/'+data.img)
+                },
+                error: function (request, status, error){
+                    alert(error);
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+    <h1>Machine Learning Test</h1>
+        <h3>Click Learning</h3>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/bbs/list">BBS</a>
+                </li>
+                <li>
+                    <a href="/chart">Chart</a>
+                </li>
+                <li>
+                    <a href="/machinelearning">MachineLearning</a>
+                </li>
+                <li>
+                    <a href="/reinforcement">ReinforcementLearning</a>
+                </li>
+            </ul>
+        </nav>
+    <ul id="learningmenu">
+        <li>
+            <a href='/hand'>HandWriteNum</a>
+        </li>
+        <li>
+            <a href='/lstm'>LSTM</a>
+        </li>
+        <li>
+            <a href='/kmeans'>KMeans</a>
+        </li>
+        <li>
+            <a href='/meanshift'>MeanShift</a>
+        </li>
+    </ul>
+    <div id='kmeansdiv'>
+        <p>MeanShift</p>
+        군집 갯수 : <input type="number" id="num" name="num">
+        <button type="button" onclick="num()">번호입력</button>
+        <div id='imgdiv'><img id='img'></div>
+    </div>
+</body>
+</html>

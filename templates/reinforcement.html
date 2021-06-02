@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Reinforcement Learning</title>
+    <script>
+
+    </script>
+    <style>
+        body {margin:0; padding:0; background:url('/static/moodback.png') no-repeat; text-align:center;}
+        h1 {margin:0; margin-bottom:5px; padding:0; color:red; font-family:Courier}
+        h3 {font-family:Cursive;}
+        nav {margin:0; background-color:rgb(100,200,200);}
+        nav>ul {margin:0; text-align:center; padding:0;}
+        nav>ul>li {display:inline; list-style-type:none; padding:0 15px; border-right:1px black solid;}
+        nav>ul>li:last-child {border-right:none;}
+        nav>ul>li>a {text-decoration:none; color:black; font-family:Georgia;}
+        #learningmenu {float:right; margin-top:30px;margin-right:1.5%; background-color:skyblue; list-style-type:none;
+                    padding:0; text-align:center;}
+        #learningmenu>li {padding:5px 10px;}
+        #learningmenu>li>a {text-decoration:none; color:black; font-family:Georgia; background-color:yellow;}
+        #lstmimg {background-color:rgba(0, 247, 255, 0.5); width:fit-content; margin:0 auto; padding:30px;}
+        @media (min-width: 0px) {body {width:1920px;}}
+        .videodiv {background-color:white; width:fit-content; height:fit-content; margin:10px auto; display:inline-block;}
+        #after {margin-left:40px;}
+    </style>
+</head>
+<body>
+    <h1>Machine Learning Test</h1>
+        <h3>Click Learning</h3>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/bbs/list">BBS</a>
+                </li>
+                <li>
+                    <a href="/chart">Chart</a>
+                </li>
+                <li>
+                    <a href="/machinelearning">MachineLearning</a>
+                </li>
+                <li>
+                    <a href="/reinforcement">ReinforcementLearning</a>
+                </li>
+            </ul>
+        </nav>
+    <div id='before' class='videodiv'>
+        <video width="500" height="350" autoplay controls>
+            <source src="static/before.mp4" type="video/mp4">
+        </video>
+        <p>Before Learning</p>
+    </div>
+    <div id='after' class='videodiv'>
+        <video width="500" height="350" autoplay controls>
+            <source src="static/after.mp4" type="video/mp4">
+        </video>
+        <p>After Learning</p>
+    </div>
+</body>
+</html>
